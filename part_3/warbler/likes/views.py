@@ -1,7 +1,9 @@
 from flask import (render_template, request, flash, redirect, g, abort, Blueprint)
 
-from likes.models import (
-    db, User, Message)
+
+from warbler.database import db
+from warbler.users.models import User
+from warbler.messages.models import Message
 
 
 likes_views = Blueprint('likes_views', __name__,

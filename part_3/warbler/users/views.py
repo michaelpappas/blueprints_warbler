@@ -5,8 +5,10 @@ from flask import (
 from sqlalchemy.exc import IntegrityError
 
 from warbler.users.models import (
-    db, User, Message, DEFAULT_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL)
+    db, User, DEFAULT_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL)
+from warbler.messages.models import Message
 
+from warbler.auth.auth_utils import do_logout
 
 from warbler.users.forms import UserEditForm
 
@@ -33,7 +35,7 @@ def list_users():
     else:
         users = User.query.filter(User.username.like(f"%{search}%")).all()
 
-    return render_template('users/index.html', users=users)
+    return render_template('index.html', users=users)
 
 
 @users_views.get('/users/<int:user_id>')
@@ -46,7 +48,7 @@ def show_user(user_id):
 
     user = User.query.get_or_404(user_id)
 
-    return render_template('users/show.html', user=user)
+    return render_template('show.html', user=user)
 
 
 @users_views.get('/users/<int:user_id>/following')
@@ -58,7 +60,7 @@ def show_following(user_id):
         return redirect("/")
 
     user = User.query.get_or_404(user_id)
-    return render_template('users/following.html', user=user)
+    return render_template('following.html', user=user)
 
 
 @users_views.get('/users/<int:user_id>/followers')
@@ -70,7 +72,7 @@ def show_followers(user_id):
         return redirect("/")
 
     user = User.query.get_or_404(user_id)
-    return render_template('users/followers.html', user=user)
+    return render_template('followers.html', user=user)
 
 
 @users_views.post('/users/follow/<int:follow_id>')
@@ -143,7 +145,7 @@ def edit_profile():
 
         flash("Wrong password, please try again.", 'danger')
 
-    return render_template('users/edit.html', form=form, user_id=user.id)
+    return render_template('edit.html', form=form, user_id=user.id)
 
 
 @users_views.post('/users/delete')

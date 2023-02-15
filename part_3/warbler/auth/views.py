@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from .forms import UserAddForm, LoginForm
 
 from warbler.users.models import User
-from warbler.models import db
+from warbler.database import db
 from warbler.auth.auth_utils import do_login, do_logout
 
 auth_views = Blueprint('auth_views', __name__,

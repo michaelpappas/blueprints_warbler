@@ -1,8 +1,7 @@
 """SQLAlchemy follows models for Warbler."""
 
-from flask_sqlalchemy import SQLAlchemy
+from warbler.database import db
 
-db = SQLAlchemy()
 
 class Follows(db.Model):
     """Connection of a follower <-> followed_user."""

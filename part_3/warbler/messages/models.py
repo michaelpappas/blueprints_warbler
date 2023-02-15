@@ -1,12 +1,8 @@
 """SQLAlchemy messages models for Warbler."""
 
-
 from datetime import datetime
 
-
-
-from flask_sqlalchemy import SQLAlchemy
-db = SQLAlchemy()
+from warbler.database import db
 
 class Message(db.Model):
     """An individual message ("warble")."""

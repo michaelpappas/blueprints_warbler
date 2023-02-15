@@ -2,15 +2,14 @@
 
 from flask_bcrypt import Bcrypt
 
+
+from warbler.database import db
 from warbler.follows.models import Follows
-from warbler.messages.models import Message
+from warbler.likes.models import Like ##we'are not directly using it but we do need to referenc eit
 
 
-from flask_sqlalchemy import SQLAlchemy
 
 bcrypt = Bcrypt()
-
-db = SQLAlchemy()
 
 DEFAULT_IMAGE_URL = "/static/images/default-pic.png"
 DEFAULT_HEADER_IMAGE_URL = "/static/images/warbler-hero.jpg"
