@@ -1,7 +1,11 @@
 import os
 from dotenv import load_dotenv
 
-from warbler.root import root_views
+from warbler.root.views import root_views
+from warbler.auth.views import auth_views
+from warbler.users.views import users_views
+from warbler.messages.views import messages_views
+
 
 
 from flask import (
@@ -10,11 +14,10 @@ from flask import (
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
-from forms import (
-    UserAddForm, UserEditForm, LoginForm, MessageForm, CSRFProtection,
-)
-from models import (
-    db, connect_db, User, Message, DEFAULT_IMAGE_URL, DEFAULT_HEADER_IMAGE_URL)
+from warbler.forms import CSRFProtection
+
+from warbler.models import connect_db
+from warbler.users.models import User
 
 load_dotenv()
 
@@ -23,6 +26,9 @@ CURR_USER_KEY = "curr_user"
 app = Flask(__name__)
 
 app.register_blueprint(root_views)
+app.register_blueprint(auth_views)
+app.register_blueprint(users_views)
+app.register_blueprint(messages_views)
 
 
 # Get DB_URI from environ variable (useful for production/testing) or,
