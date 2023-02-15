@@ -8,7 +8,9 @@
 import os
 from unittest import TestCase
 
-from models import db, Message, User
+from warbler.messages.models import Message
+from warbler.users.models import User
+from warbler.database import db
 
 # BEFORE we import our app, let's set an environmental variable
 # to use a different database for tests (we need to do this
@@ -19,7 +21,8 @@ os.environ['DATABASE_URL'] = "postgresql:///warbler_test"
 
 # Now we can import app
 
-from app import app, CURR_USER_KEY
+from warbler.__init__ import app, CURR_USER_KEY
+# from app import app, CURR_USER_KEY
 
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
@@ -107,7 +110,7 @@ class AuthViewTestCase(TestCase):
                     "password": "password",
                 },
                 follow_redirects=True,)
-                
+
             self.assertEqual(resp.status_code, 200)
             self.assertIn("Hello, u1!", str(resp.data))
             self.assertIn("@u1", str(resp.data))
@@ -121,11 +124,11 @@ class AuthViewTestCase(TestCase):
                     "password": "badpassword",
                 },
                 follow_redirects=True,)
-                
+
             self.assertEqual(resp.status_code, 200)
             self.assertIn("Invalid credentials.", str(resp.data))
             self.assertIn("Welcome back.", str(resp.data))
-            
+
     def test_login_wrong_password_username(self):
         with self.client as c:
             resp = c.post(
@@ -135,7 +138,7 @@ class AuthViewTestCase(TestCase):
                     "password": "badpassword",
                 },
                 follow_redirects=True,)
-                
+
             self.assertEqual(resp.status_code, 200)
             self.assertIn("Invalid credentials.", str(resp.data))
             self.assertIn("Welcome back.", str(resp.data))

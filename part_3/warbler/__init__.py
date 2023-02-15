@@ -9,11 +9,8 @@ from warbler.likes.views import likes_views
 
 
 
-from flask import (
-    Flask, render_template, request, flash, redirect, session, g, abort, Blueprint
-)
+from flask import (Flask, render_template, session, g)
 from flask_debugtoolbar import DebugToolbarExtension
-from sqlalchemy.exc import IntegrityError
 
 from warbler.forms import CSRFProtection
 

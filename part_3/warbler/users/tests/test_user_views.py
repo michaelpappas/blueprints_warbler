@@ -10,7 +10,11 @@ from unittest import TestCase
 
 from bs4 import BeautifulSoup
 
-from models import Follows, Like, Message, User, db, connect_db
+from warbler.follows.models import Follows
+from warbler.likes.models import Like
+from warbler.messages.models import Message
+from warbler.users.models import User
+from warbler.database import db, connect_db
 
 # BEFORE we import our app, let's set an environmental variable
 # to use a different database for tests (we need to do this
@@ -21,7 +25,8 @@ os.environ['DATABASE_URL'] = "postgresql:///warbler_test"
 
 # Now we can import app
 
-from app import app, CURR_USER_KEY
+from warbler.__init__ import app, CURR_USER_KEY
+# from app import app, CURR_USER_KEY
 
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['DEBUG_TB_HOSTS'] = ['dont-show-debug-toolbar']

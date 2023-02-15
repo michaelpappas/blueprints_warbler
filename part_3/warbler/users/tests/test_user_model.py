@@ -10,7 +10,8 @@ from sqlalchemy.exc import IntegrityError
 from unittest import TestCase
 from flask_bcrypt import Bcrypt
 
-from models import db, User, connect_db
+from warbler.database import db, connect_db
+from warbler.users.models import User
 
 # BEFORE we import our app, let's set an environmental variable
 # to use a different database for tests (we need to do this
@@ -21,7 +22,8 @@ os.environ['DATABASE_URL'] = "postgresql:///warbler_test"
 
 # Now we can import app
 
-from app import app
+# from app import app
+from warbler.__init__ import app
 
 # instantiate Bcrypt to create hashed passwords for test data
 bcrypt = Bcrypt()
@@ -61,7 +63,7 @@ class UserModelTestCase(TestCase):
 
         db.session.add_all([u1, u2])
         db.session.commit()
-        
+
         self.u1_id = u1.id
         self.u2_id = u2.id
 
@@ -125,7 +127,7 @@ class UserModelTestCase(TestCase):
     def test_invalid_signup(self):
         # Assert that user signup raises an integrity error when we make a user
         # with the same username
-        
+
         with self.assertRaises(IntegrityError):
             User.signup("u1", "u1@email.com", "password", None)
             db.session.commit()
