@@ -1,6 +1,6 @@
-from flask import (
-    Flask, render_template, request, flash, redirect, session, g, abort, Blueprint
-)
+from flask import (render_template, flash, redirect, session, g, Blueprint)
+
+from sqlalchemy.exc import IntegrityError
 
 from .forms import UserAddForm, LoginForm
 
@@ -42,14 +42,14 @@ def signup():
 
         except IntegrityError:
             flash("Username already taken", 'danger')
-            return render_template('users/signup.html', form=form)
+            return render_template('signup.html', form=form)
 
         do_login(user)
 
         return redirect("/")
 
     else:
-        return render_template('users/signup.html', form=form)
+        return render_template('signup.html', form=form)
 
 
 @auth_views.route('/login', methods=["GET", "POST"])
@@ -70,7 +70,7 @@ def login():
 
         flash("Invalid credentials.", 'danger')
 
-    return render_template('users/login.html', form=form)
+    return render_template('login.html', form=form)
 
 
 @auth_views.post('/logout')

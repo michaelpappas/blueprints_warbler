@@ -1,13 +1,11 @@
-from flask import (
-    Flask, render_template, request, flash, redirect, session, g, abort, Blueprint
-)
+from flask import ( render_template, flash, redirect, g, Blueprint )
 from warbler.messages.forms import MessageForm
 
 from warbler.messages.models import (db, Message)
 
 
 messages_views = Blueprint('messages_views', __name__,
-                        template_folder='templates')
+                           template_folder='templates')
 
 
 @messages_views.route('/messages/new', methods=["GET", "POST"])
@@ -30,7 +28,7 @@ def add_message():
 
         return redirect(f"/users/{g.user.id}")
 
-    return render_template('messages/create.html', form=form)
+    return render_template('create.html', form=form)
 
 
 @messages_views.get('/messages/<int:message_id>')
@@ -42,7 +40,7 @@ def show_message(message_id):
         return redirect("/")
 
     msg = Message.query.get_or_404(message_id)
-    return render_template('messages/show.html', message=msg)
+    return render_template('show.html', message=msg)
 
 
 @messages_views.post('/messages/<int:message_id>/delete')

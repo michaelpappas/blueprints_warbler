@@ -1,6 +1,4 @@
-from flask import (
-    Flask, render_template, request, flash, redirect, session, g, abort, Blueprint
-)
+from flask import (render_template, request, flash, redirect, g, abort, Blueprint)
 
 from likes.models import (
     db, User, Message)
@@ -18,7 +16,7 @@ def show_likes(user_id):
         return redirect("/")
 
     user = User.query.get_or_404(user_id)
-    return render_template('users/likes.html', user=user)
+    return render_template('likes.html', user=user)
 
 
 @likes_views.post('/messages/<int:message_id>/like')

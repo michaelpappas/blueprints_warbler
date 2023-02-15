@@ -1,8 +1,8 @@
-from flask import (
-    Flask, render_template, request, flash, redirect, session, g, abort, Blueprint
-)
+from flask import (render_template, g, Blueprint)
 root_views = Blueprint('root_views', __name__,
                         template_folder='templates')
+
+from warbler.messages.models import Message
 
 ##############################################################################
 # Homepage
